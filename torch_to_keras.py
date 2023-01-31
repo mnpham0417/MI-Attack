@@ -9,14 +9,15 @@ import numpy as np
 from torch.autograd import Variable
 from collections import OrderedDict
 import tensorflow as tf
+from architectures_unstructured import get_architecture
 
 
 parser = argparse.ArgumentParser(description='To convert a Torch model to a Keras model.')
 parser.add_argument('-d', '--dataset', type=str, default='cifar10', choices=['cifar10', 'cifar100'], help='Indicate dataset. The bearpaw package only contains cifar10 and cifar100. For other models, you do not need a conversion. You can use the train_target_model to train a keras model from scratch.')
-parser.add_argument('-m', '--model_name', type=str, default='alexnet', choices=['alexnet', 'resnet-110', 'densenet-bc-100-12', 'densenet-bc-L190-k40'], help='Indicate the model type used in bearpaw package.')
+parser.add_argument('-m', '--model_name', type=str, default='alexnet', choices=['alexnet', 'resnet-110', 'densenet-bc-100-12', 'densenet-bc-L190-k40', 'snl-resnet-18'], help='Indicate the model type used in bearpaw package.')
 parser.add_argument('-t', '--torch_model_path', type=str, default='torch_models/cifar10/alexnet.pth.tar', help='Indicate the path to load the torch model.')
 parser.add_argument('-k', '--keras_model_path', type=str, default='keras_models/cifar10/alexnet.h5', help='Indicate the path to save the keras model.')
-
+parser.add_argument('--stride', type=int, default=1, help='conv1 stride')
 
 if __name__ == '__main__':
     args = parser.parse_args()
@@ -38,6 +39,8 @@ if __name__ == '__main__':
         torch_model = DenseNet(depth=100, num_classes=num_classes)
     elif model_name == 'densenet-bc-L190-k40':
         torch_model = DenseNet(depth=190, growthRate=40, num_classes=num_classes)
+    elif model_name == 'snl-resnet-18':
+        torch_model = get_architecture(arch='resnet18_in', dataset=dataset, device='cpu', args=args)
     else:
         print("Model name is unknown!")
         exit()

@@ -55,4 +55,5 @@ if __name__ == '__main__':
     if dataset == "imagenet":
         conf_based_attack_imagenet(dataset, attack_classifier, sampling, what_portion_of_samples_attacker_knows, save_confidence_histogram, report_separated_performance, num_classes, num_targeted_classes, model_name, verbose, args.imagenet_path)
     else:
-        conf_based_attack(dataset, attack_classifier, sampling, what_portion_of_samples_attacker_knows, save_confidence_histogram, report_separated_performance, num_classes, num_targeted_classes, model_name, verbose)
+        # conf_based_attack(dataset, attack_classifier, sampling, what_portion_of_samples_attacker_knows, save_confidence_histogram, report_separated_performance, num_classes, num_targeted_classes, model_name, verbose)
+        conf_based_attack_pytorch(dataset, attack_classifier, sampling, what_portion_of_samples_attacker_knows, save_confidence_histogram, report_separated_performance, num_classes, num_targeted_classes, model_name, verbose)
